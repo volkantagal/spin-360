@@ -6,6 +6,7 @@
 </head>
 <body>
 	<div id="360Image"></div>
+	<div id="360Video"></div>
 
 	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="scripts/spin360.js"></script>
@@ -52,6 +53,17 @@
 				"images/Tv/product34.jpg",
 				"images/Tv/product35.jpg",
 				"images/Tv/product36.jpg"
+			],
+			lazyLoad: false
+		});
+
+		window.spVideo = $.spin360({
+			id: "360Video",
+			width: 500,
+			height: 500,
+			type: 'video',
+			datas: [
+				"videos/Tv/20Ms.mp4"
 			],
 			lazyLoad: false
 		});

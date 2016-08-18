@@ -14,6 +14,7 @@
 		var defaultOp = {
 			id: '360Image',
 			imgClass: 'spin-image',
+			type: 'images',
 			datas: [
 				"images/Tv/product01.jpg",
 				"images/Tv/product02.jpg",
@@ -84,7 +85,11 @@
 				'cursor': '-webkit-grab'
 			});
 
-			self.run(opt);
+			if (self.options.type === 'images') {
+				self.run(opt);
+			} else {
+				self.runVideo(opt);
+			}
 		},
 		run: function (opt) {
 			var self = this;
@@ -95,6 +100,18 @@
 				self.createEvents(datas);
 			} else {
 				self.createTouchEvents(datas);
+			}
+		},
+		runVideo: function (opt) {
+			var self = this;
+			var datas = opt.datas;
+
+			self.appendVideo(datas);
+
+			if (self.isDesktop()) {
+				self.createVideoEvents(datas);
+			} else {
+				self.createTouchVideoEvents(datas);
 			}
 		},
 		appendImages: function (datas) {
@@ -114,6 +131,11 @@
 
 			self.$element.html(template);
 			this.setImages(this.activeIndex);
+		},
+		appendVideo: function (datas) {
+			var self = this;
+			var template = '<video style="width: 100%; height: auto;" src="'+ datas[0] +'"></video>';
+			self.$element.html(template);
 		},
 		setImages: function (index) {
 			var self = this;
@@ -157,6 +179,37 @@
 			   self.$element.css('cursor', '-webkit-grab');
 			});
 		},
+		createVideoEvents: function (datas) {
+			var self = this;
+			var video = self.$element.find('video')[0];
+			var duration = video.duration;
+			var videoWidth = self.$element.width();
+
+	    self.$element.mousedown(function(e){
+	    	e.preventDefault();
+	    	var p0 = { x: e.pageX, y: e.pageY };
+		    $(this).on("mousemove",function (e) {
+		    		self.$element.css('cursor', '-webkit-grabbing');
+		        var p1 = { x: e.pageX, y: e.pageY };
+
+		        if (p0.x - p1.x > 20) {
+			        video.currentTime = video.currentTime + 0.2;
+			        video.currentTime = video.currentTime === video.duration ? 0 : video.currentTime;
+			        p0 = p1;
+			      } else if (p0.x - p1.x <= -10) {
+			      	video.currentTime = video.currentTime - 0.2;
+			      	video.currentTime = 0 === video.currentTime ? video.duration : video.currentTime;
+			        p0 = p1;
+			      }
+		    });
+			}).mouseup(function (){
+			   $(this).off("mousemove");
+			   self.$element.css('cursor', '-webkit-grab');
+			}).mouseleave(function (){
+			   $(this).off("mousemove");
+			   self.$element.css('cursor', '-webkit-grab');
+			});
+		},
 		createTouchEvents: function (datas) {
 			var self = this;
 			var p0 = { };
@@ -181,6 +234,34 @@
         	self.activeIndex = self.activeIndex < 0 ? datas.length - 1 : self.activeIndex;
         	self.setImages(self.activeIndex);
         	p0 = p1;
+        }
+			});
+		},
+		createTouchVideoEvents: function (datas) {
+			var self = this;
+			var p0 = { };
+			var video = self.$element.find('video')[0];
+			var duration = video.duration;
+			var videoWidth = self.$element.width();
+
+			self.$element.bind('touchstart', function(e) {
+				e.preventDefault();
+				p0 = { x: e.changedTouches[0].pageX, y: e.changedTouches[0].pageY };
+			});
+
+			self.$element.bind('touchmove',function(e){
+	      e.preventDefault();
+	      self.$element.css('cursor', '-webkit-grabbing');
+        var p1 = { x: e.changedTouches[0].pageX, y: e.changedTouches[0].pageY };
+
+        if (p0.x - p1.x > 10) {
+        	video.currentTime = video.currentTime + 0.2;
+			    video.currentTime = video.currentTime === video.duration ? 0 : video.currentTime;
+			    p0 = p1;
+        } else if (p0.x - p1.x <= -10) {
+        	video.currentTime = video.currentTime - 0.2;
+	      	video.currentTime = 0 === video.currentTime ? video.duration : video.currentTime;
+	        p0 = p1;
         }
 			});
 		},
