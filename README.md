@@ -1,36 +1,32 @@
 # spin-360
 
-spin-360 is a npm project.
+> `npm install spin-360`
 
-If you want use it:
+spin-360 360 derece detaylı resim gösterimi için geliştirilmiş ve geliştirilmektedir. 
 
-`npm install spin-360`
-
-spin-360 360 derece detaylı resim gösterimi için geliştirilmiş ve geliştirilmektedir. spin-360 is 360 degree detailed image presentation plugin
-
-360 derece ürün gösterimi ve özellikle e-ticaret siteleri için uygundur. This plugin is avalible for e-Commerce sites.
+360 derece ürün gösterimi ve özellikle e-ticaret siteleri için uygundur. 
 
 ## API
 
-$.spin360(options);
+$(element).spin360(options);
 
-##Parametreler - Options
+## Parametreler - Options
 
-* `id`: Type (`String`) - 360 derece görselin gösterileceği alanın 'id' si. Default (`360Image`)
-* `width`: Type (`Integer`) Görsel alanının genişliği Default (`500`)
-* `height`: Type (`Integer`) - Görsel alanının yüksekliği Default (`500`)
-* `datas`: Type (`Array`) - 360 derece gösterilmesi istenen nesnenin sıralı listesi.
-* `imgClass`: Type (`String`) - Görsellerin alacağı class değeri. Default (`spin-image`)
-* `lazyLoad`: Type (`boolean`) - Aktif olmayan görsellerin sayfaya yüklenmesini bekletir. Aktif olduktan sonra yükleyip, yüklenme zamanını dengeler. - Default(`true`)
+* `width`: (`Integer`) Görsel alanının genişliği - Default (`500`)
+* `height`: (`Integer`) - Görsel alanının yüksekliği - Default (`500`)
+* `datas`: (`Array`) - 360 derece gösterilmesi istenen nesnenin sıralı listesi.
+* `imgClass`: (`String`) - Görsellerin alacağı class değeri - Default (`spin-image`)
+* `type`: (`String`) - 'images' ya da 'video' - Default (`images`)
+* `lazyLoad`: (`boolean`) - Aktif olmayan görsellerin sayfaya yüklenmesini bekletir. Aktif olduktan sonra yükleyip, yüklenme zamanını dengeler - Default(`true`)
 
-##Kullanımı - Usage
+## Kullanımı - Usage
 
 İlk olarak 'Jquery' ve 'spin-360' scriptleri sayfaya dahil edilir.
 
 ```javascript
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="scripts/spin360.js"></script>
-Daha sonra 360 derece görselimizin görüneceği alan oluşturulur.
+/* Daha sonra 360 derece görselimizin görüneceği alan oluşturulur. */
 ```
 
 ```html
@@ -40,8 +36,7 @@ Daha sonra 360 derece görselimizin görüneceği alan oluşturulur.
 Son olarak spin-360 pluginimiz tetiklendikten sonra projemiz kullanılmaya hazırdır.
 
 ```javascript
-window.sp = $.spin360({
-    id: "360Image",
+var spin = $('#360Image').spin360({
     width: 500,
     height: 500,
     imgClass: 'spin-image',
@@ -89,7 +84,4 @@ window.sp = $.spin360({
 
 Projeyi çalıştırdıktan sonra durdurmak istiyorsanız:
 
-window.sp.destroy();
-##Authors
-
-Volkan Tağal
+spin.destroy();
